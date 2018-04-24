@@ -1,16 +1,23 @@
 <template>
   <div id="app">
     <AnimalsList></AnimalsList>
+    <h1>Extras</h1>
+    <ButtonDisabledAfter></ButtonDisabledAfter>
+    <ButtonConfirm />
   </div>
 </template>
 
 <script>
 import AnimalsList from './components/AnimalsList.vue'
+import ButtonDisabledAfter from './components/ButtonDisabledAfter.vue'
+import ButtonConfirm from './components/ButtonConfirm.vue'
 
 export default {
   name: 'app',
   components: {
-    AnimalsList
+    AnimalsList,
+    ButtonDisabledAfter,
+    ButtonConfirm
   }
 }
 </script>
