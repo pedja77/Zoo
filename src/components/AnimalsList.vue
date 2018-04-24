@@ -7,6 +7,10 @@
       <input type="text" id="species" v-model="newAnimal.species">
       <label for="date">Date of birth</label>
       <input type="date" id="date" v-model="newAnimal.dateOfBirth">
+      <label for="sector">Select sector</label>
+      <select id="sector" v-model="newAnimal.sector">
+        <option v-for="(sector, key) in sectors" :key="key" :value="sector.name">{{ sector.name }}</option>
+      </select>
       <button type="submit">Add new animal</button>
     </form>
     <table>
@@ -14,6 +18,7 @@
         <th>Name</th>
         <th>Species</th>
         <th>Born on</th>
+        <th>Sector</th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
       </thead>
@@ -21,6 +26,7 @@
         <td>{{ animal.name  }}</td>
         <td>{{ animal.species  }}</td>
         <td>{{ animal.dateOfBirth ? animal.dateOfBirth : 'unknown' }}</td>
+        <td>{{ animal.sector  }}
         <td><button @click="removeAnimal(animal)">x</button></td>
         <td><button @click="moveToTop(animal)">Move to top</button></td>
       </tr>
@@ -37,17 +43,24 @@ export default {
   data() {
     return {
       animals: [
-        { name: 'Polly', species: 'Parrot', dateOfBirth: '15/02/1899' },
-        { name: 'Molly', species: 'Antilope' },
-        { name: 'Dumbo', species: 'Elephant', dateOfBirth: '15/02/1989' },
-        { name: 'Peter', species: 'Rabbit', dateOfBirth: '15/02/1969' },
-        { name: 'Bagira', species: 'Panther', dateOfBirth: '' }
+        { name: 'Polly', species: 'Parrot', dateOfBirth: '15/02/1899', sector: 'Rain forest' },
+        { name: 'Molly', species: 'Antilope', sector: 'Ravanah' },
+        { name: 'Dumbo', species: 'Elephant', dateOfBirth: '15/02/1989', sector: 'Ravanah' },
+        { name: 'Peter', species: 'Rabbit', dateOfBirth: '15/02/1969', sector: 'Forest' },
+        { name: 'Bagira', species: 'Panther', dateOfBirth: '', sector: 'Rain forest' }
       ],
       newAnimal: {
         name: '',
         species: '',
-        dateOfBirth: ''
-      }
+        dateOfBirth: '',
+        sector: ''
+      },
+      sectors: [
+        { name: 'Forest animals', surface: 'Cages' },
+        { name: 'Rain forest animals', surface: 'Cages' },
+        { name: 'Ocean animals', surface: 'Aquarium' },
+        { name: 'Savannah animals', surface: 'Cages' }
+      ]
     }
   },
   methods: {
