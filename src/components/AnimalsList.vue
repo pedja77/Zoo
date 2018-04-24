@@ -5,11 +5,13 @@
         <th>Name</th>
         <th>Species</th>
         <th>Born on</th>
+        <th>&nbsp;</th>
       </thead>
       <tr v-for="(animal, key) in animals" :key="key">
         <td>{{ animal.name  }}</td>
         <td>{{ animal.species  }}</td>
         <td>{{ animal.dateOfBirth ? animal.dateOfBirth : 'unknown' }}</td>
+        <td><button @click="removeAnimal(animal)">x</button></td>
       </tr>
     </table>
   </div>
@@ -30,6 +32,11 @@ export default {
         { name: 'Peter', species: 'Rabbit', dateOfBirth: '15/02/1969' },
         { name: 'Bagira', species: 'Panther', dateOfBirth: '' }
       ]
+    }
+  },
+  methods: {
+    removeAnimal(animal) {
+      this.animals.splice(this.animals.indexOf(animal), 1)
     }
   }
 }
