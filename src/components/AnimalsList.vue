@@ -13,6 +13,7 @@
       </select>
       <button type="submit">Add new animal</button>
     </form>
+    <h3>Animals in our Zoo</h3>
     <table>
       <thead>
         <th>Name</th>
@@ -26,15 +27,35 @@
         <td>{{ animal.name  }}</td>
         <td>{{ animal.species  }}</td>
         <td>{{ animal.dateOfBirth ? animal.dateOfBirth : 'unknown' }}</td>
-        <td>{{ animal.sector  }}
+        <td>{{ animal.sector.name  }}
         <td><button @click="removeAnimal(animal)">x</button></td>
         <td><button @click="moveToTop(animal)">Move to top</button></td>
+      </tr>
+    </table>
+    <h3>Sectors to visit</h3>
+    <table>
+      <thead>
+        <th>Sector</th>
+        <th>Surface</th>
+        <th>&nbsp;</th>
+      </thead>
+      <tr v-for="(sector, key) in sectors" :key="key">
+        <td>{{ sector.name }}</td>
+        <td>{{ sector.surface }}</td>
+        <td><button @click="seeAnimals(sector.name)">See animals in sector</button></td>
       </tr>
     </table>
   </div>
 </template>
 
 <script>
+const sectors = [
+        { name: 'Forest animals', surface: 'Cages' },
+        { name: 'Rain forest animals', surface: 'Cages' },
+        { name: 'Ocean animals', surface: 'Aquarium' },
+        { name: 'Savannah animals', surface: 'Cages' }
+      ];
+
 export default {
   name: 'AnimalsList',
   props: {
@@ -42,25 +63,22 @@ export default {
   },
   data() {
     return {
+
+      sectors: sectors,
+      
       animals: [
-        { name: 'Polly', species: 'Parrot', dateOfBirth: '15/02/1899', sector: 'Rain forest' },
-        { name: 'Molly', species: 'Antilope', sector: 'Ravanah' },
-        { name: 'Dumbo', species: 'Elephant', dateOfBirth: '15/02/1989', sector: 'Ravanah' },
-        { name: 'Peter', species: 'Rabbit', dateOfBirth: '15/02/1969', sector: 'Forest' },
-        { name: 'Bagira', species: 'Panther', dateOfBirth: '', sector: 'Rain forest' }
+        { name: 'Polly', species: 'Parrot', dateOfBirth: '15/02/1899', sector: sectors[1] },
+        { name: 'Molly', species: 'Antilope', sector: sectors[3] },
+        { name: 'Dumbo', species: 'Elephant', dateOfBirth: '15/02/1989', sector: sectors[3] },
+        { name: 'Peter', species: 'Rabbit', dateOfBirth: '15/02/1969', sector: sectors[0] },
+        { name: 'Bagira', species: 'Panther', dateOfBirth: '', sector: sectors[1] }
       ],
       newAnimal: {
         name: '',
         species: '',
         dateOfBirth: '',
         sector: ''
-      },
-      sectors: [
-        { name: 'Forest animals', surface: 'Cages' },
-        { name: 'Rain forest animals', surface: 'Cages' },
-        { name: 'Ocean animals', surface: 'Aquarium' },
-        { name: 'Savannah animals', surface: 'Cages' }
-      ]
+      }
     }
   },
   methods: {
@@ -74,6 +92,15 @@ export default {
     addNewAnimal() {
       this.animals.push(this.newAnimal);
       this.newAnimal = {};
+    },
+    seeAnimals(sectorName) {
+      let animals = this.animals
+        .filter(animal => animal.sector.name === sectorName)
+        .map(animal => animal.species + ' ' + animal.name)
+        .join('\n');
+      //console.log(animals);
+
+      alert(animals);
     }
   }
 }
