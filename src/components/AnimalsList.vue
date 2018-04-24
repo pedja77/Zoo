@@ -6,12 +6,14 @@
         <th>Species</th>
         <th>Born on</th>
         <th>&nbsp;</th>
+        <th>&nbsp;</th>
       </thead>
       <tr v-for="(animal, key) in animals" :key="key">
         <td>{{ animal.name  }}</td>
         <td>{{ animal.species  }}</td>
         <td>{{ animal.dateOfBirth ? animal.dateOfBirth : 'unknown' }}</td>
         <td><button @click="removeAnimal(animal)">x</button></td>
+        <td><button @click="moveToTop(animal)">Move to top</button></td>
       </tr>
     </table>
   </div>
@@ -36,7 +38,11 @@ export default {
   },
   methods: {
     removeAnimal(animal) {
-      this.animals.splice(this.animals.indexOf(animal), 1)
+      this.animals.splice(this.animals.indexOf(animal), 1);
+    },
+    moveToTop(animal) {
+      let temp = this.animals.splice(this.animals.indexOf(animal), 1)
+      this.animals.unshift(temp[0]);
     }
   }
 }
